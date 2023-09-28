@@ -7,83 +7,86 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-        }
-
-        .word {
-            display: inline-block;
-            padding: 10px;
-            margin: 5px;
-            background-color: #f2f2f2;
-            cursor: pointer;
-        }
-
-        .line {
-            width: 300px;
-            height: 30px;
-            background-color: #ddd;
-            margin: 5px;
-            padding: 5px;
+            background-color: #f0f0f0;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .line {
+            width: 100%;
+            height: auto; /* Allow multiple words in a line */
+            border: 2px dashed #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap; /* Allow multiple words to wrap within a line */
+            align-items: flex-start; /* Align words to the top */
+            justify-content: center;
+        }
+
+        .word {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            margin: 5px;
+        }
+
+        .word:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    </div>
-    
-    <div class="container">
-        <div class="word" draggable="true" ondragstart="drag(event)">concrete</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">words</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">mind</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">on</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">memories</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">sun</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">to</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">moon</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">that's</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">cool</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">miles</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">interlude</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">and</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">hair</div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
+        <div class="line" data-word=""></div>
     </div>
 
     <script>
-        function allowDrop(event) {
-            event.preventDefault();
-        }
+        const lines = document.querySelectorAll('.line');
+        const words = document.querySelectorAll('.word');
 
-        function drag(event) {
-            event.dataTransfer.setData("text", event.target.innerText);
-        }
+        words.forEach(word => {
+            word.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.textContent);
+            });
+        });
 
-        function drop(event) {
-            event.preventDefault();
-            var data = event.dataTransfer.getData("text");
-            event.target.innerText = data;
-        }
+        lines.forEach(line => {
+            line.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            line.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const word = e.dataTransfer.getData('text/plain');
+                line.innerHTML += `<span class="word">${word}</span>`;
+            });
+        });
     </script>
 </body>
 </html>
