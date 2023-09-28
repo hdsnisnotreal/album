@@ -3,100 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cool Drag and Drop Words</title>
+    <title>Drag and Drop Words</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .word {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+
+        .line {
+            width: 300px;
+            height: 30px;
+            background-color: #ddd;
+            margin: 5px;
+            padding: 5px;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-        }
-
-        .line {
-            width: 120px;
-            height: 60px;
-            border: 2px dashed #ccc;
-            margin: 5px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .word {
-            background-color: #3498db;
-            color: #fff;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            user-select: none;
-            font-size: 16px;
-            margin: 5px;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .word:hover {
-            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="line" data-word="concrete"></div>
-        <div class="line" data-word="words"></div>
-        <div class="line" data-word="mind"></div>
-        <div class="line" data-word="on"></div>
-        <div class="line" data-word="memories"></div>
-        <div class="line" data-word="sun"></div>
-        <div class="line" data-word="to"></div>
-        <div class="line" data-word="moon"></div>
-        <div class="line" data-word="that's"></div>
-        <div class="line" data-word="cool"></div>
-        <div class="line" data-word="miles"></div>
-        <div class="line" data-word="interlude"></div>
-        <div class="line" data-word="hair"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    </div>
+    
+    <div class="container">
+        <div class="word" draggable="true" ondragstart="drag(event)">concrete</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">words</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">mind</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">on</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">memories</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">sun</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">to</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">moon</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">that's</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">cool</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">miles</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">interlude</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">and</div>
+        <div class="word" draggable="true" ondragstart="drag(event)">hair</div>
     </div>
 
     <script>
-        const lines = document.querySelectorAll('.line');
-        const words = document.querySelectorAll('.word');
+        function allowDrop(event) {
+            event.preventDefault();
+        }
 
-        words.forEach(word => {
-            word.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', e.target.textContent);
-            });
-        });
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.innerText);
+        }
 
-        lines.forEach(line => {
-            line.addEventListener('dragover', (e) => {
-                e.preventDefault();
-            });
-
-            line.addEventListener('drop', (e) => {
-                e.preventDefault();
-                const word = e.dataTransfer.getData('text/plain');
-                if (!line.textContent) {
-                    line.textContent = word;
-                    e.target.appendChild(document.querySelector(`[data-word="${word}"]`));
-                }
-            });
-        });
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            event.target.innerText = data;
+        }
     </script>
 </body>
 </html>
