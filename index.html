@@ -34,24 +34,24 @@
 </head>
 <body>
     <div class="container">
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="line" ondrop="drop(event, 1)" ondragover="allowDrop(event)" id="line1"></div>
+        <div class="line" ondrop="drop(event, 2)" ondragover="allowDrop(event)" id="line2"></div>
+        <div class="line" ondrop="drop(event, 3)" ondragover="allowDrop(event)" id="line3"></div>
+        <div class="line" ondrop="drop(event, 4)" ondragover="allowDrop(event)" id="line4"></div>
+        <div class="line" ondrop="drop(event, 5)" ondragover="allowDrop(event)" id="line5"></div>
+        <div class="line" ondrop="drop(event, 6)" ondragover="allowDrop(event)" id="line6"></div>
+        <div class="line" ondrop="drop(event, 7)" ondragover="allowDrop(event)" id="line7"></div>
+        <div class="line" ondrop="drop(event, 8)" ondragover="allowDrop(event)" id="line8"></div>
+        <div class="line" ondrop="drop(event, 9)" ondragover="allowDrop(event)" id="line9"></div>
+        <div class="line" ondrop="drop(event, 10)" ondragover="allowDrop(event)" id="line10"></div>
+        <div class="line" ondrop="drop(event, 11)" ondragover="allowDrop(event)" id="line11"></div>
+        <div class="line" ondrop="drop(event, 12)" ondragover="allowDrop(event)" id="line12"></div>
+        <div class="line" ondrop="drop(event, 13)" ondragover="allowDrop(event)" id="line13"></div>
+        <div class="line" ondrop="drop(event, 14)" ondragover="allowDrop(event)" id="line14"></div>
+        <div class="line" ondrop="drop(event, 15)" ondragover="allowDrop(event)" id="line15"></div>
+        <div class="line" ondrop="drop(event, 16)" ondragover="allowDrop(event)" id="line16"></div>
+        <div class="line" ondrop="drop(event, 17)" ondragover="allowDrop(event)" id="line17"></div>
+        <div class="line" ondrop="drop(event, 18)" ondragover="allowDrop(event)" id="line18"></div>
     </div>
     
     <div class="container">
@@ -73,6 +73,8 @@
     </div>
 
     <script>
+        var usedWords = new Set();
+
         function allowDrop(event) {
             event.preventDefault();
         }
@@ -81,14 +83,19 @@
             event.dataTransfer.setData("text", event.target.innerText);
         }
 
-        function drop(event) {
+        function drop(event, lineNum) {
             event.preventDefault();
             var data = event.dataTransfer.getData("text");
-            var line = event.target;
-            var word = document.createElement("div");
-            word.className = "word";
-            word.textContent = data;
-            line.appendChild(word);
+            var lineId = "line" + lineNum;
+            var line = document.getElementById(lineId);
+
+            if (!usedWords.has(data)) {
+                var word = document.createElement("div");
+                word.className = "word";
+                word.textContent = data;
+                line.appendChild(word);
+                usedWords.add(data);
+            }
         }
     </script>
 </body>
