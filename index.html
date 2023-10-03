@@ -18,6 +18,8 @@
         }
 
         .line {
+            display: flex;
+            align-items: center;
             width: 300px;
             height: 30px;
             background-color: #ddd;
@@ -30,72 +32,54 @@
             display: flex;
             flex-wrap: wrap;
         }
+
+        .number {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="line" ondrop="drop(event, 1)" ondragover="allowDrop(event)" id="line1"></div>
-        <div class="line" ondrop="drop(event, 2)" ondragover="allowDrop(event)" id="line2"></div>
-        <div class="line" ondrop="drop(event, 3)" ondragover="allowDrop(event)" id="line3"></div>
-        <div class="line" ondrop="drop(event, 4)" ondragover="allowDrop(event)" id="line4"></div>
-        <div class="line" ondrop="drop(event, 5)" ondragover="allowDrop(event)" id="line5"></div>
-        <div class="line" ondrop="drop(event, 6)" ondragover="allowDrop(event)" id="line6"></div>
-        <div class="line" ondrop="drop(event, 7)" ondragover="allowDrop(event)" id="line7"></div>
-        <div class="line" ondrop="drop(event, 8)" ondragover="allowDrop(event)" id="line8"></div>
-        <div class="line" ondrop="drop(event, 9)" ondragover="allowDrop(event)" id="line9"></div>
-        <div class="line" ondrop="drop(event, 10)" ondragover="allowDrop(event)" id="line10"></div>
-        <div class="line" ondrop="drop(event, 11)" ondragover="allowDrop(event)" id="line11"></div>
-        <div class="line" ondrop="drop(event, 12)" ondragover="allowDrop(event)" id="line12"></div>
-        <div class="line" ondrop="drop(event, 13)" ondragover="allowDrop(event)" id="line13"></div>
-        <div class="line" ondrop="drop(event, 14)" ondragover="allowDrop(event)" id="line14"></div>
-        <div class="line" ondrop="drop(event, 15)" ondragover="allowDrop(event)" id="line15"></div>
-        <div class="line" ondrop="drop(event, 16)" ondragover="allowDrop(event)" id="line16"></div>
-        <div class="line" ondrop="drop(event, 17)" ondragover="allowDrop(event)" id="line17"></div>
-        <div class="line" ondrop="drop(event, 18)" ondragover="allowDrop(event)" id="line18"></div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="number">1.</div>
+        </div>
+        <div class="line" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="number">2.</div>
+        </div>
+        <!-- Add more lines as needed -->
     </div>
     
     <div class="container">
         <div class="word" draggable="true" ondragstart="drag(event)">concrete</div>
         <div class="word" draggable="true" ondragstart="drag(event)">memories</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">mind</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">on</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">sun</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">words</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">to</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">moon</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">miles</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">cool</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">that's</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">hair</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">and</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">interlude</div>
-        <div class="word" draggable="true" ondragstart="drag(event)">enough</div>
+        <!-- Add more words as needed -->
     </div>
 
     <script>
-        var usedWords = new Set();
+        const usedWords = new Set();
 
         function allowDrop(event) {
             event.preventDefault();
         }
 
         function drag(event) {
-            event.dataTransfer.setData("text", event.target.innerText);
+            const word = event.target.innerText;
+            if (!usedWords.has(word)) {
+                event.dataTransfer.setData("text", word);
+            } else {
+                event.preventDefault(); // Prevent dragging a word that has already been used
+            }
         }
 
-        function drop(event, lineNum) {
+        function drop(event) {
             event.preventDefault();
-            var data = event.dataTransfer.getData("text");
-            var lineId = "line" + lineNum;
-            var line = document.getElementById(lineId);
-
-            if (!usedWords.has(data)) {
-                var word = document.createElement("div");
-                word.className = "word";
-                word.textContent = data;
-                line.appendChild(word);
-                usedWords.add(data);
-            }
+            const data = event.dataTransfer.getData("text");
+            const line = event.target;
+            const word = document.createElement("div");
+            word.className = "word";
+            word.textContent = data;
+            line.appendChild(word);
+            usedWords.add(data); // Mark the word as used
         }
     </script>
 </body>
