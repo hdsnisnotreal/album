@@ -97,7 +97,7 @@
         <!-- Add more lines as needed -->
     </div>
     
-    <div class="container">
+    <div class="container" id="wordBank">
         <div class="word" draggable="true" ondragstart="drag(event)">concrete</div>
         <div class="word" draggable="true" ondragstart="drag(event)">enough</div>
         <div class="word" draggable="true" ondragstart="drag(event)">memories</div>
@@ -141,6 +141,12 @@
             word.textContent = data;
             line.appendChild(word);
             usedWords.add(data); // Mark the word as used
+            // Remove the word from the word bank
+            const wordBank = document.getElementById("wordBank");
+            const wordToRemove = wordBank.querySelector(`.word:contains(${data})`);
+            if (wordToRemove) {
+                wordToRemove.remove();
+            }
         }
     </script>
 </body>
